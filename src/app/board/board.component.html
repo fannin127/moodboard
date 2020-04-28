@@ -1,0 +1,36 @@
+<div class="container">
+    <h1>Moodboard</h1>
+    <div class="flex-grid">
+        <aside class="col sidebar">
+            <button (click)="newItem()">New</button>
+            <button (click)="printJson()">Print</button>
+
+            <div>
+                <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                <button (click)="fileInput.click()">Select File</button>
+                <button (click)="onUpload()">Upload</button>
+            </div>
+
+            <div class="flex-grid" style="flex-direction: column;">
+                <label>{{current.id}}</label>
+                <label>Image</label>
+                <input id="image" [(ngModel)]="current.image" />
+
+                <label>Url</label>
+                <input id="url" [(ngModel)]="current.url" />
+            </div>
+        </aside>
+        <section class="col main">
+            <div *ngFor="let item of items">
+                <div>
+                    <div (click)="setCurrent(item)" (rzStop)="onResizeStop($event, item)" ngResizable ngDraggable
+                        [position]="item.position" [trackPosition]="true" (endOffset)="onMoveEnd($event, item)">
+                        <img [src]="item.image" [alt]="item.url" [style.width.px]="item.maxWidth"
+                            [style.height.px]="item.maxHeight">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
