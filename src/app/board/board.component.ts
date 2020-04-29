@@ -16,14 +16,20 @@ export class BoardComponent implements OnInit {
   }
 
   newItem() {
+    console.log('new')
     this.items.push({
       id: uuid.v4(),
-      position: {x: 0, y: 0}
+      position: {x: 0, y: 0},
+      maxHeight: 100,
+      maxWidth: 100
     })
   }
 
   onMoveEnd($event, item) {
-    let wow = this.items[this.items.findIndex(pred => pred.id = item.id)]
+    console.log('move end', $event)
+    let wow = this.items[this.items.findIndex(pred => pred.id == item.id)]
+
+    console.log(wow, item)
     wow.position = {x: $event.x, y: $event.y}
   }
 
@@ -65,14 +71,22 @@ export class BoardComponent implements OnInit {
 }
 
   setCurrent(item) {
+    console.log('setCurrent')
+
     this.current = item
   }
 
   onResizeStop($event, item) {
+    console.log('resize stop')
+
     console.log($event)
-    let wow = this.items[this.items.findIndex(pred => pred.id = item.id)]
+    let wow = this.items[this.items.findIndex(pred => pred.id == item.id)]
     wow.maxWidth = $event.size.width
     wow.maxHeight = $event.size.height
+  }
+
+  openLink(item) {
+    window.open(item.url, '_blank')
   }
 
 }
